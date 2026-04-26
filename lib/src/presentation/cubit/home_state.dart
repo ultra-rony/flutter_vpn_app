@@ -7,5 +7,6 @@ abstract class HomeState with _$HomeState {
     V2RayServer? selectedServer,
     @Default(VPNConnectionStatus.disconnected) VPNConnectionStatus connectionStatus,
     @Default(false) bool isLoading,
+    IpinfoEntity? ipInfo,
   }) = _HomeState;
 }

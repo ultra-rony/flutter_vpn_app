@@ -58,7 +58,9 @@ class _HomePageState extends State<HomePage> {
                             context.read<HomeCubit>().toggleConnection();
                           } else if (state.selectedServer == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Сначала выберите сервер')),
+                              const SnackBar(
+                                content: Text('Сначала выберите сервер'),
+                              ),
                             );
                           }
                         },
@@ -71,6 +73,35 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Spacer(),
+                      if (state.ipInfo != null && !isConnecting) ...[
+                        SizedBox(
+                          height: 120,
+                          child: Column(
+                            children: [
+                              Text(
+                                "${state.ipInfo?.city}, ${state.ipInfo?.country}",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                "IP: ${state.ipInfo?.ip}",
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                          ),
+                        ),
+                      ] else
+                        SizedBox(height: 120),
                       ServerSelectionWidget(
                         selectedServer: state.selectedServer,
                         onTap: () {
@@ -86,7 +117,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      // bottomNavigationBar: const _BottomControlPanel(),
     );
   }
 }

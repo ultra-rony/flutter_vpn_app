@@ -5,6 +5,10 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vpnapp/core/models/v2ray_server.dart';
 import 'package:vpnapp/core/utils/v2ray_service.dart';
+import 'package:vpnapp/src/data/mappers/ipinfo_mapper.dart';
+import 'package:vpnapp/src/data/models/ipinfo_model.dart';
+import 'package:vpnapp/src/domain/entities/ipinfo_entity.dart';
+import 'package:vpnapp/src/domain/use_cases/get_remote_ipinfo_use_case.dart';
 
 part 'home_state.dart';
 
@@ -13,22 +17,34 @@ part 'home_cubit.freezed.dart';
 @LazySingleton()
 class HomeCubit extends HydratedCubit<HomeState> {
   final V2RayService _service;
+  final GetRemoteNomenclatureUseCase _getRemoteNomenclatureUseCase;
   StreamSubscription? _statusSub;
 
-  HomeCubit(this._service) : super(const HomeState()) {
+  HomeCubit(this._service, this._getRemoteNomenclatureUseCase)
+    : super(const HomeState()) {
     _init();
   }
 
   void _init() async {
     await _service.init();
 
-    // Сначала узнаем реальный статус у нативного движка
     final realStatus = _service.status;
     emit(state.copyWith(connectionStatus: realStatus));
 
-    // Затем подписываемся на стрим изменений
+    if (realStatus == VPNConnectionStatus.connected) {
+      _fetchIpInfo();
+    }
+
     _statusSub = _service.statusStream.listen((status) {
       emit(state.copyWith(connectionStatus: status));
+
+      // ДОБАВИТЬ ЭТО:
+      if (status == VPNConnectionStatus.connected) {
+        _fetchIpInfo();
+      } else if (status == VPNConnectionStatus.disconnected) {
+        // Опционально: очищаем инфо при отключении
+        emit(state.copyWith(ipInfo: null));
+      }
     });
 
     if (state.servers.isEmpty) {
@@ -67,8 +83,19 @@ class HomeCubit extends HydratedCubit<HomeState> {
       await _service.disconnect();
       emit(state.copyWith(selectedServer: server));
       await _service.connect(server);
+      _fetchIpInfo();
     } else {
       emit(state.copyWith(selectedServer: server));
+    }
+  }
+
+  Future<void> _fetchIpInfo() async {
+    try {
+      await Future.delayed(Duration(seconds: 5));
+      final resp = await _getRemoteNomenclatureUseCase();
+      emit(state.copyWith(ipInfo: resp.data));
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -95,6 +122,11 @@ class HomeCubit extends HydratedCubit<HomeState> {
                 ?.map((e) => V2RayServer.fromJson(e as Map<String, dynamic>))
                 .toList() ??
             [],
+        ipInfo: json['ipInfo'] != null
+            ? IpinfoModel.fromJson(
+                json['ipInfo'] as Map<String, dynamic>,
+              ).toEntity()
+            : null,
         selectedServer: json['selectedServer'] != null
             ? V2RayServer.fromJson(
                 json['selectedServer'] as Map<String, dynamic>,
@@ -111,6 +143,7 @@ class HomeCubit extends HydratedCubit<HomeState> {
     return {
       'servers': state.servers.map((e) => e.toJson()).toList(),
       'selectedServer': state.selectedServer?.toJson(),
+      'ipInfo': state.ipInfo?.toModel().toJson(),
     };
   }
 
