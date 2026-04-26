@@ -34,7 +34,7 @@ class ServerListPage extends StatelessWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: state.servers.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            separatorBuilder: (_, _) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
               final server = state.servers[index];
               final isSelected = state.selectedServer?.id == server.id;
@@ -71,7 +71,7 @@ class _ServerTile extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.blueAccent.withOpacity(0.2) : Colors.white.withOpacity(0.05),
+        color: isSelected ? Colors.blueAccent.withValues(alpha: 0.2) : Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isSelected ? Colors.blueAccent : Colors.white10,
@@ -84,7 +84,7 @@ class _ServerTile extends StatelessWidget {
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: const Icon(Icons.public, color: Colors.white70),
@@ -98,7 +98,7 @@ class _ServerTile extends StatelessWidget {
         ),
         subtitle: Text(
           '${server.protocol.toUpperCase()} • ${server.address}',
-          style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 12),
+          style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 12),
         ),
         trailing: isSelected
             ? const Icon(Icons.check_circle, color: Colors.blueAccent)

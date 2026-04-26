@@ -31,7 +31,7 @@ class ServerSelectionWidget extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: Colors.blueAccent.withOpacity(0.2),
+                  color: Colors.blueAccent.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.public, color: Colors.white),
@@ -54,7 +54,7 @@ class ServerSelectionWidget extends StatelessWidget {
                           ? '${selectedServer!.protocol.toUpperCase()} • ${selectedServer!.address}'
                           : 'Нажмите, чтобы выбрать',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.6),
+                        color: Colors.white.withValues(alpha: 0.6),
                         fontSize: 12,
                       ),
                       maxLines: 1,
