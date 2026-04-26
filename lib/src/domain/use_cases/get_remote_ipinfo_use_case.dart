@@ -5,11 +5,11 @@ import 'package:vpnapp/src/domain/entities/ipinfo_entity.dart';
 import 'package:vpnapp/src/domain/repositories/home_repository.dart';
 
 @injectable
-class GetRemoteNomenclatureUseCase
+class GetRemoteIpinfoUseCase
     implements UseCase<Result<IpinfoEntity?>, void> {
   final HomeRepository _repository;
 
-  GetRemoteNomenclatureUseCase(this._repository);
+  GetRemoteIpinfoUseCase(this._repository);
 
   @override
   Future<Result<IpinfoEntity?>> call({void params}) async {

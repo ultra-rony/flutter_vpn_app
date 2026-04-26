@@ -44,13 +44,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i600.HomeRepository>(
       () => _i734.HomeRepositoryImpl(gh<_i956.HomeRemoteDataSource>()),
     );
-    gh.factory<_i241.GetRemoteNomenclatureUseCase>(
-      () => _i241.GetRemoteNomenclatureUseCase(gh<_i600.HomeRepository>()),
+    gh.factory<_i241.GetRemoteIpinfoUseCase>(
+      () => _i241.GetRemoteIpinfoUseCase(gh<_i600.HomeRepository>()),
     );
     gh.lazySingleton<_i855.HomeCubit>(
       () => _i855.HomeCubit(
         gh<_i877.V2RayService>(),
-        gh<_i241.GetRemoteNomenclatureUseCase>(),
+        gh<_i241.GetRemoteIpinfoUseCase>(),
       ),
     );
     return this;

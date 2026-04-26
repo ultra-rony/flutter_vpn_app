@@ -17,10 +17,10 @@ part 'home_cubit.freezed.dart';
 @LazySingleton()
 class HomeCubit extends HydratedCubit<HomeState> {
   final V2RayService _service;
-  final GetRemoteNomenclatureUseCase _getRemoteNomenclatureUseCase;
+  final GetRemoteIpinfoUseCase _getRemoteIpinfoUseCase;
   StreamSubscription? _statusSub;
 
-  HomeCubit(this._service, this._getRemoteNomenclatureUseCase)
+  HomeCubit(this._service, this._getRemoteIpinfoUseCase)
     : super(const HomeState()) {
     _init();
   }
@@ -92,7 +92,7 @@ class HomeCubit extends HydratedCubit<HomeState> {
   Future<void> _fetchIpInfo() async {
     try {
       await Future.delayed(Duration(seconds: 5));
-      final resp = await _getRemoteNomenclatureUseCase();
+      final resp = await _getRemoteIpinfoUseCase();
       emit(state.copyWith(ipInfo: resp.data));
     } catch (e) {
       rethrow;
