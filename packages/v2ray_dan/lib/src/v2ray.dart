@@ -119,7 +119,9 @@ class V2RayURL {
     if (url.startsWith("vmess://")) {
       try {
         String b64 = url.substring(8);
-        while (b64.length % 4 != 0) b64 += "=";
+        while (b64.length % 4 != 0) {
+          b64 += "=";
+        }
         String decoded = utf8.decode(base64Decode(b64));
         Map<String, dynamic> jsonMap = jsonDecode(decoded);
         remark = jsonMap['ps'] ?? "V2Ray Server";

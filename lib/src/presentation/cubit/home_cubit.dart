@@ -48,9 +48,31 @@ class HomeCubit extends HydratedCubit<HomeState> {
     emit(state.copyWith(servers: servers));
   }
 
-  void selectServer(V2RayServer server) {
-    if (state.connectionStatus == VPNConnectionStatus.connected) return;
-    emit(state.copyWith(selectedServer: server));
+  void add(String link) {
+    try {
+      final newServer = V2RayServer.fromAnyLink(link);
+      final updatedServers = [...state.servers, newServer];
+      emit(
+        state.copyWith(
+          servers: updatedServers,
+          selectedServer: state.selectedServer ?? newServer,
+        ),
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> selectServer(V2RayServer server) async {
+    if (state.selectedServer?.id == server.id) return;
+
+    if (state.connectionStatus == VPNConnectionStatus.connected) {
+      await _service.disconnect();
+      emit(state.copyWith(selectedServer: server));
+      await _service.connect(server);
+    } else {
+      emit(state.copyWith(selectedServer: server));
+    }
   }
 
   Future<void> toggleConnection() async {
