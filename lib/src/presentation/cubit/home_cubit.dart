@@ -37,10 +37,7 @@ class HomeCubit extends HydratedCubit<HomeState> {
   }
 
   void _loadServers() {
-    final rawLinks = [
-      "vless://bd700024-ad36-4dec-9289-eb5813a157d9@45.88.15.168:8443?encryption=none&security=tls&type=ws&headerType=none&path=%2Fvless&sni=admin.vipvpnn.ru#Netherlands-1",
-      "vless://bd700024-ad36-4dec-9289-eb5813a157d9@45.88.15.168:8443?encryption=none&security=tls&type=ws&headerType=none&path=%2Fvless&sni=admin.vipvpnn.ru#Netherlands-2",
-    ];
+    final rawLinks = [];
 
     final servers = rawLinks
         .map((link) => V2RayServer.fromAnyLink(link))
