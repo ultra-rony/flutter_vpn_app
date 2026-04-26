@@ -1,7 +1,6 @@
 name: v2ray_dan
 description: Custom V2Ray implementation for Flutter (Android only)
 version: 0.0.4
-homepage: https://danials.org
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

@@ -1,13 +1,13 @@
 # VPN App
 
-Проект мобильного VPN-приложения на Flutter.
+VPN-приложения на Flutter only(android).
 
 ## 📸 Скриншоты
 
 <p align="center">
-  <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/1.jpg?raw=true" width="250" />
-  <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/2.jpg?raw=true" width="250" />
-  <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/3.jpg?raw=true" width="250" />
+  <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/1.jpg?raw=true" width="200" />
+  <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/2.jpg?raw=true" width="200" />
+  <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/3.jpg?raw=true" width="200" />
 </p>
 
 ---
@@ -23,20 +23,20 @@
 ### Установка и запуск
 
 1. **Клонируйте репозиторий:**
-   ```bash
-   git clone git@github.com:ultra-rony/vpnapp.git
-   cd vpnapp
-   ```
+```bash
+git clone git@github.com:ultra-rony/vpnapp.git
+cd vpnapp
+```
 
 2.  **Установка зависимостей**
-   Загрузите все необходимые пакеты:
-    ```bash
-    flutter pub get
-    ```
+Загрузите все необходимые пакеты:
+```bash
+flutter pub get
+```
 
 3.  **Запуск приложения**
-    Убедитесь, что эмулятор запущен или устройство подключено, затем выполните:
-    ```bash
-    flutter run
-    ```
+Убедитесь, что эмулятор запущен или устройство подключено, затем выполните:
+```bash
+flutter run
+```
     
