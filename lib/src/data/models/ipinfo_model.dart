@@ -25,7 +25,7 @@ class IpinfoModel {
   @JsonKey(name: "readme")
   final String? readme;
 
-  IpinfoModel ({
+  IpinfoModel({
     this.ip,
     this.hostname,
     this.city,
@@ -46,5 +46,3 @@ class IpinfoModel {
     return _$IpinfoModelToJson(this);
   }
 }
-
-

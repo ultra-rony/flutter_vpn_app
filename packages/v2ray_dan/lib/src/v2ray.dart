@@ -70,7 +70,8 @@ class V2ray {
     return logs?.cast<String>() ?? [];
   }
 
-  Future<int> getServerDelay({required String config, required String url}) async {
+  Future<int> getServerDelay(
+      {required String config, required String url}) async {
     final int? delay = await _channel.invokeMethod('getServerDelay', {
       'config': config,
       'url': url,

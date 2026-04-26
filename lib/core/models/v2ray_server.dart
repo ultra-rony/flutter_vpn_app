@@ -68,7 +68,9 @@ class V2RayServer {
       }
 
       // Remove vmess:// prefix and handle potential whitespace
-      String base64String = trimmedLink.replaceFirst('vmess://', '').replaceAll(RegExp(r'\s+'), '');
+      String base64String = trimmedLink
+          .replaceFirst('vmess://', '')
+          .replaceAll(RegExp(r'\s+'), '');
 
       // Fix base64 padding if necessary
       while (base64String.length % 4 != 0) {
@@ -81,7 +83,9 @@ class V2RayServer {
         jsonString = utf8.decode(base64.decode(base64String));
       } catch (e) {
         // Try URL-safe base64 if standard fails
-        final urlSafeBase64 = base64String.replaceAll('-', '+').replaceAll('_', '/');
+        final urlSafeBase64 = base64String
+            .replaceAll('-', '+')
+            .replaceAll('_', '/');
         jsonString = utf8.decode(base64.decode(urlSafeBase64));
       }
 
@@ -96,7 +100,9 @@ class V2RayServer {
       final uuid = jsonData['id'] as String?;
 
       if (address == null || portStr == null || uuid == null) {
-        throw Exception('Missing required fields in vmess JSON (add, port, or id)');
+        throw Exception(
+          'Missing required fields in vmess JSON (add, port, or id)',
+        );
       }
 
       return V2RayServer(
@@ -248,7 +254,12 @@ class V2RayServer {
         ],
       },
       'outbounds': [
-        {'tag': 'proxy', 'protocol': protocol, 'settings': outboundSettings, 'streamSettings': _buildStreamSettings()},
+        {
+          'tag': 'proxy',
+          'protocol': protocol,
+          'settings': outboundSettings,
+          'streamSettings': _buildStreamSettings(),
+        },
         {'tag': 'direct', 'protocol': 'freedom', 'settings': {}},
         {'tag': 'block', 'protocol': 'blackhole', 'settings': {}},
         {'tag': 'dns-out', 'protocol': 'dns', 'settings': {}},
@@ -270,7 +281,10 @@ class V2RayServer {
         ],
       };
     } else {
-      final userSettings = <String, dynamic>{'id': uuid, 'encryption': encryption ?? 'none'};
+      final userSettings = <String, dynamic>{
+        'id': uuid,
+        'encryption': encryption ?? 'none',
+      };
 
       if (flow != null && flow!.isNotEmpty) {
         userSettings['flow'] = flow!;
@@ -312,7 +326,9 @@ class V2RayServer {
               'uri': ['/'],
               'headers': {
                 'Host': [host ?? address],
-                'User-Agent': ['Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'],
+                'User-Agent': [
+                  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                ],
                 'Content-Type': ['application/octet-stream'],
                 'Transfer-Encoding': ['chunked'],
               },

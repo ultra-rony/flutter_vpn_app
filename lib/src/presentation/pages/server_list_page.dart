@@ -71,7 +71,9 @@ class _ServerTile extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.blueAccent.withValues(alpha: 0.2) : Colors.white.withValues(alpha: 0.05),
+        color: isSelected
+            ? Colors.blueAccent.withValues(alpha: 0.2)
+            : Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isSelected ? Colors.blueAccent : Colors.white10,
@@ -98,7 +100,10 @@ class _ServerTile extends StatelessWidget {
         ),
         subtitle: Text(
           '${server.protocol.toUpperCase()} • ${server.address}',
-          style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 12),
+          style: TextStyle(
+            color: Colors.white.withValues(alpha: 0.5),
+            fontSize: 12,
+          ),
         ),
         trailing: isSelected
             ? const Icon(Icons.check_circle, color: Colors.blueAccent)

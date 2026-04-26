@@ -5,11 +5,7 @@ final theme = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
   colorSchemeSeed: Colors.deepPurple,
-  textTheme: GoogleFonts.robotoTextTheme(
-    ThemeData
-        .dark()
-        .textTheme,
-  ),
+  textTheme: GoogleFonts.robotoTextTheme(ThemeData.dark().textTheme),
 
   scaffoldBackgroundColor: const Color(0XFF0F0F0F),
   appBarTheme: const AppBarTheme(

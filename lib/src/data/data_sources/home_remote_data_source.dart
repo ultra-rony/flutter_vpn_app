@@ -7,7 +7,6 @@ abstract class HomeRemoteDataSource {
 
 @LazySingleton(as: HomeRemoteDataSource)
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
-
   final Dio _dio;
 
   HomeRemoteDataSourceImpl(this._dio);

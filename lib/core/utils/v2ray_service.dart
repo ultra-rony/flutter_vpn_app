@@ -7,7 +7,13 @@ import 'package:v2ray_dan/v2ray_dan.dart';
 import 'package:vpnapp/core/di/injectable.dart';
 import 'package:vpnapp/core/models/v2ray_server.dart';
 
-enum VPNConnectionStatus { disconnected, connecting, connected, disconnecting, error }
+enum VPNConnectionStatus {
+  disconnected,
+  connecting,
+  connected,
+  disconnecting,
+  error,
+}
 
 class V2RayService {
   static final V2RayService _instance = V2RayService._internal();
@@ -29,7 +35,8 @@ class V2RayService {
   String? get lastError => _lastError;
 
   // Stream for status changes
-  final StreamController<VPNConnectionStatus> _statusController = StreamController<VPNConnectionStatus>.broadcast();
+  final StreamController<VPNConnectionStatus> _statusController =
+      StreamController<VPNConnectionStatus>.broadcast();
   Stream<VPNConnectionStatus> get statusStream => _statusController.stream;
 
   V2RayService._internal() {
@@ -115,24 +122,33 @@ class V2RayService {
       _logger.i('Calling v2ray.initialize()...');
       try {
         _filesDir = await _v2rayPlugin
-            .initialize(notificationIconResourceType: 'drawable', notificationIconResourceName: 'ic_stat_v2ray')
+            .initialize(
+              notificationIconResourceType: 'drawable',
+              notificationIconResourceName: 'ic_stat_v2ray',
+            )
             .timeout(
-          const Duration(seconds: 10),
-          onTimeout: () {
-            throw TimeoutException('V2Ray initialization timed out');
-          },
-        );
+              const Duration(seconds: 10),
+              onTimeout: () {
+                throw TimeoutException('V2Ray initialization timed out');
+              },
+            );
         _logger.i('V2Ray plugin initialized successfully');
         _logger.i('App files directory: $_filesDir');
       } catch (e, stackTrace) {
-        _logger.e('FATAL: V2Ray plugin initialization failed: $e', stackTrace: stackTrace);
+        _logger.e(
+          'FATAL: V2Ray plugin initialization failed: $e',
+          stackTrace: stackTrace,
+        );
         throw Exception('Failed to initialize V2Ray plugin: $e');
       }
 
       // Verify plugin is working by getting core version
       _logger.i('Verifying V2Ray core is responsive...');
       try {
-        final version = await _v2rayPlugin.getCoreVersion().timeout(const Duration(seconds: 3), onTimeout: () => '');
+        final version = await _v2rayPlugin.getCoreVersion().timeout(
+          const Duration(seconds: 3),
+          onTimeout: () => '',
+        );
         if (version.isNotEmpty) {
           _logger.i('✓ V2Ray core version: $version');
         } else {
@@ -165,7 +181,9 @@ class V2RayService {
         },
       );
 
-      _logger.i('VPN permission status: ${hasPermission ? "granted" : "denied"}');
+      _logger.i(
+        'VPN permission status: ${hasPermission ? "granted" : "denied"}',
+      );
       return hasPermission;
     } catch (e, stackTrace) {
       _logger.e('VPN permission check failed: $e', stackTrace: stackTrace);
@@ -203,11 +221,11 @@ class V2RayService {
 
   // Connect to a V2Ray server
   Future<bool> connect(
-      V2RayServer server, {
-        String? customDns,
-        bool proxyOnly = false,
-        bool useSystemDns = true,
-      }) async {
+    V2RayServer server, {
+    String? customDns,
+    bool proxyOnly = false,
+    bool useSystemDns = true,
+  }) async {
     _logger.i('========== Starting connection process ==========');
     _logger.i('Mode: ${proxyOnly ? "Proxy Only" : "VPN (System-wide)"}');
     _logger.i('Server: ${server.name} (${server.address}:${server.port})');
@@ -216,15 +234,23 @@ class V2RayService {
     // Platform validation
     if (!Platform.isAndroid && !Platform.isMacOS) {
       _logger.e('Unsupported platform: ${Platform.operatingSystem}');
-      _cleanupAfterError('Flaming Cherubim currently only supports VPN connections on Android and macOS.');
+      _cleanupAfterError(
+        'Flaming Cherubim currently only supports VPN connections on Android and macOS.',
+      );
       return false;
     }
 
-
     try {
       // Use a slightly longer timeout to prevent premature "stuck" declarations
-      return await _runConnectLogic(server, customDns, proxyOnly, useSystemDns).timeout(
-        const Duration(seconds: 45), // Increased timeout to allow for macOS admin prompt interaction
+      return await _runConnectLogic(
+        server,
+        customDns,
+        proxyOnly,
+        useSystemDns,
+      ).timeout(
+        const Duration(
+          seconds: 45,
+        ), // Increased timeout to allow for macOS admin prompt interaction
         onTimeout: () {
           _logger.e('Connection logic timed out after 45 seconds');
           // Don't throw - try to clean up and return false to keep UI alive
@@ -255,7 +281,12 @@ class V2RayService {
     }
   }
 
-  Future<bool> _runConnectLogic(V2RayServer server, String? customDns, bool proxyOnly, bool useSystemDns) async {
+  Future<bool> _runConnectLogic(
+    V2RayServer server,
+    String? customDns,
+    bool proxyOnly,
+    bool useSystemDns,
+  ) async {
     // Guard against concurrent connection attempts
     if (_isConnectInProgress) {
       throw Exception('Connection already in progress, please wait');
@@ -263,13 +294,23 @@ class V2RayService {
     _isConnectInProgress = true;
 
     try {
-      return await _runConnectLogicInternal(server, customDns, proxyOnly, useSystemDns);
+      return await _runConnectLogicInternal(
+        server,
+        customDns,
+        proxyOnly,
+        useSystemDns,
+      );
     } finally {
       _isConnectInProgress = false;
     }
   }
 
-  Future<bool> _runConnectLogicInternal(V2RayServer server, String? customDns, bool proxyOnly, bool useSystemDns) async {
+  Future<bool> _runConnectLogicInternal(
+    V2RayServer server,
+    String? customDns,
+    bool proxyOnly,
+    bool useSystemDns,
+  ) async {
     // Step 1: Force reset existing connections
     _logger.i('Ensuring previous connections are closed...');
     try {
@@ -297,7 +338,9 @@ class V2RayService {
         _logger.i('VPN Permission granted: $hasPermission');
 
         if (!hasPermission) {
-          throw Exception('VPN permission denied by user. Cannot establish VPN connection.');
+          throw Exception(
+            'VPN permission denied by user. Cannot establish VPN connection.',
+          );
         }
       } catch (e, stackTrace) {
         _logger.e('VPN permission check failed: $e', stackTrace: stackTrace);
@@ -313,7 +356,13 @@ class V2RayService {
 
     String configJson;
     try {
-      final config = server.toV2RayConfig(customDns: customDns?.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList());
+      final config = server.toV2RayConfig(
+        customDns: customDns
+            ?.split(',')
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList(),
+      );
 
       config['inbounds'] = [
         {
@@ -391,10 +440,18 @@ class V2RayService {
       List<dynamic> outboundsList = fullConfig['outbounds'];
 
       if (!outboundsList.any((o) => o['tag'] == 'direct')) {
-        outboundsList.add({'tag': 'direct', 'protocol': 'freedom', 'settings': {}});
+        outboundsList.add({
+          'tag': 'direct',
+          'protocol': 'freedom',
+          'settings': {},
+        });
       }
       if (!outboundsList.any((o) => o['tag'] == 'dns-out')) {
-        outboundsList.add({'tag': 'dns-out', 'protocol': 'dns', 'settings': {}});
+        outboundsList.add({
+          'tag': 'dns-out',
+          'protocol': 'dns',
+          'settings': {},
+        });
       }
 
       // DNS Configuration - Fetch system DNS dynamically
@@ -426,9 +483,12 @@ class V2RayService {
 
       // IMPORTANT: Use the resolved IP in the outbound settings to avoid redundant lookups
       // and potential circular routing issues within the tunnel.
-      if (fullConfig['outbounds'] != null && fullConfig['outbounds'].isNotEmpty) {
+      if (fullConfig['outbounds'] != null &&
+          fullConfig['outbounds'].isNotEmpty) {
         for (var outbound in fullConfig['outbounds']) {
-          if (outbound['tag'] == 'proxy' && outbound['settings'] != null && outbound['settings']['vnext'] != null) {
+          if (outbound['tag'] == 'proxy' &&
+              outbound['settings'] != null &&
+              outbound['settings']['vnext'] != null) {
             outbound['settings']['vnext'][0]['address'] = resolvedIp;
             _logger.i('Updated outbound address to resolved IP: $resolvedIp');
           }
@@ -438,7 +498,9 @@ class V2RayService {
       // Prioritize Custom DNS if available
       final List<String> effectiveDns = [];
       if (customDns != null && customDns.isNotEmpty) {
-        effectiveDns.addAll(customDns.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty));
+        effectiveDns.addAll(
+          customDns.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty),
+        );
         _logger.i('Using Custom DNS: $effectiveDns');
       }
 
@@ -454,7 +516,10 @@ class V2RayService {
       }
 
       fullConfig['dns'] = {
-        "servers": [...effectiveDns, "localhost"], // localhost is needed for internal routing sometimes
+        "servers": [
+          ...effectiveDns,
+          "localhost",
+        ], // localhost is needed for internal routing sometimes
         "queryStrategy": "UseIP",
       };
 
@@ -480,13 +545,23 @@ class V2RayService {
           // Rule 3: Bypass local network traffic
           {
             "type": "field",
-            "ip": ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "127.0.0.0/8", "::1/128", "fc00::/7", "fe80::/10"],
+            "ip": [
+              "10.0.0.0/8",
+              "172.16.0.0/12",
+              "192.168.0.0/16",
+              "127.0.0.0/8",
+              "::1/128",
+              "fc00::/7",
+              "fe80::/10",
+            ],
             "outboundTag": "direct",
           },
           // Rule 4: Bypass DNS servers to prevent resolution deadlock
           {
             "type": "field",
-            "ip": systemDnsServers.isNotEmpty ? systemDnsServers : ["8.8.8.8", "1.1.1.1", "1.0.0.1", "8.8.4.4"],
+            "ip": systemDnsServers.isNotEmpty
+                ? systemDnsServers
+                : ["8.8.8.8", "1.1.1.1", "1.0.0.1", "8.8.4.4"],
             "outboundTag": "direct",
           },
           // Rule 5: Hijack inbound traffic to proxy
@@ -503,7 +578,9 @@ class V2RayService {
       // Re-encode
       configJson = json.encode(fullConfig);
 
-      _logger.i('Config refined successfully - Length: ${configJson.length} bytes');
+      _logger.i(
+        'Config refined successfully - Length: ${configJson.length} bytes',
+      );
       _logger.d('V2Ray Final Config $fullConfig');
     } catch (e, stackTrace) {
       _logger.e('Failed to generate config: $e', stackTrace: stackTrace);
@@ -516,23 +593,27 @@ class V2RayService {
     try {
       await _v2rayPlugin
           .startV2Ray(
-        remark: server.name,
-        config: configJson,
-        proxyOnly: proxyOnly,
-        useSystemDns: useSystemDns,
-        bypassSubnets: [],
-        blockedApps: null,
-      )
+            remark: server.name,
+            config: configJson,
+            proxyOnly: proxyOnly,
+            useSystemDns: useSystemDns,
+            bypassSubnets: [],
+            blockedApps: null,
+          )
           .timeout(
-        const Duration(seconds: 20),
-        onTimeout: () {
-          _logger.e('V2Ray startup timed out after 20 seconds');
-          throw TimeoutException('V2Ray startup timeout - server may be unreachable');
-        },
-      );
+            const Duration(seconds: 20),
+            onTimeout: () {
+              _logger.e('V2Ray startup timed out after 20 seconds');
+              throw TimeoutException(
+                'V2Ray startup timeout - server may be unreachable',
+              );
+            },
+          );
 
       final startDuration = DateTime.now().difference(startTime);
-      _logger.i('V2Ray core started successfully in ${startDuration.inMilliseconds}ms');
+      _logger.i(
+        'V2Ray core started successfully in ${startDuration.inMilliseconds}ms',
+      );
     } catch (e, stackTrace) {
       _logger.e('Failed to start V2Ray core: $e', stackTrace: stackTrace);
       throw Exception('V2Ray startup failed: $e');
@@ -547,7 +628,10 @@ class V2RayService {
 
     // Verify core version (confirms V2Ray is responsive)
     try {
-      final coreVersion = await _v2rayPlugin.getCoreVersion().timeout(const Duration(seconds: 3), onTimeout: () => '');
+      final coreVersion = await _v2rayPlugin.getCoreVersion().timeout(
+        const Duration(seconds: 3),
+        onTimeout: () => '',
+      );
 
       if (coreVersion.isNotEmpty) {
         _logger.i('✓ V2Ray core is responsive. Version: $coreVersion');
@@ -559,7 +643,9 @@ class V2RayService {
     }
 
     _logger.i('Connection verification complete');
-    _logger.i('Note: Monitor app logs and test actual traffic to confirm routing.');
+    _logger.i(
+      'Note: Monitor app logs and test actual traffic to confirm routing.',
+    );
 
     // Update status to connected
     if (_status != VPNConnectionStatus.connected) {
@@ -570,7 +656,9 @@ class V2RayService {
 
     _logger.i('========== Connection successful ==========');
     _logger.i('Server: ${server.name}');
-    _logger.i('Mode: ${proxyOnly ? "Proxy (use localhost:10808)" : "VPN (system-wide)"}');
+    _logger.i(
+      'Mode: ${proxyOnly ? "Proxy (use localhost:10808)" : "VPN (system-wide)"}',
+    );
 
     if (proxyOnly) {
       _logger.i('Configure your apps to use:');
@@ -656,10 +744,19 @@ class V2RayService {
   // Get server delay (ping)
   Future<int?> getServerDelay(V2RayServer server, {String? customDns}) async {
     try {
-      final config = server.toV2RayConfig(customDns: customDns?.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList());
+      final config = server.toV2RayConfig(
+        customDns: customDns
+            ?.split(',')
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList(),
+      );
       final configJson = json.encode(config);
 
-      return await _v2rayPlugin.getServerDelay(config: configJson, url: 'https://www.google.com/generate_204');
+      return await _v2rayPlugin.getServerDelay(
+        config: configJson,
+        url: 'https://www.google.com/generate_204',
+      );
     } catch (e) {
       return null;
     }
@@ -710,7 +807,9 @@ class V2RayService {
         if (coreLogs.isNotEmpty) {
           _logger.i('V2Ray Core Logs (last ${coreLogs.length} entries):');
           // Log last 10 entries or all if less
-          final logsToShow = coreLogs.length > 10 ? coreLogs.sublist(coreLogs.length - 10) : coreLogs;
+          final logsToShow = coreLogs.length > 10
+              ? coreLogs.sublist(coreLogs.length - 10)
+              : coreLogs;
           for (final log in logsToShow) {
             _logger.i('  [V2Ray Core] $log');
           }
@@ -724,7 +823,10 @@ class V2RayService {
       // Diagnostic 2: Verify core is responsive
       _logger.i('Diagnostic 2/3: Checking if V2Ray core is responsive...');
       try {
-        final version = await _v2rayPlugin.getCoreVersion().timeout(const Duration(seconds: 3), onTimeout: () => '');
+        final version = await _v2rayPlugin.getCoreVersion().timeout(
+          const Duration(seconds: 3),
+          onTimeout: () => '',
+        );
         if (version.isNotEmpty) {
           _logger.i('✓ V2Ray core is responsive - Version: $version');
         } else {
@@ -738,7 +840,9 @@ class V2RayService {
       _logger.i('Diagnostic 3/3: Current connection state');
       _logger.i('  Status: $_status');
       _logger.i('  Server: ${_currentServer?.name}');
-      _logger.i('  Address: ${_currentServer?.address}:${_currentServer?.port}');
+      _logger.i(
+        '  Address: ${_currentServer?.address}:${_currentServer?.port}',
+      );
       _logger.i('  Protocol: ${_currentServer?.protocol}');
 
       _logger.i('========== Diagnostics Complete ==========');
@@ -753,14 +857,19 @@ class V2RayService {
       _logger.i('   - Server is actually reachable and working');
       _logger.i('   - No firewall blocking V2Ray');
     } catch (e, stackTrace) {
-      _logger.e('Post-connection diagnostics failed: $e', stackTrace: stackTrace);
+      _logger.e(
+        'Post-connection diagnostics failed: $e',
+        stackTrace: stackTrace,
+      );
     }
   }
 
   // State management
   void _startLogPolling() {
     _logPollingTimer?.cancel();
-    _logPollingTimer = Timer.periodic(const Duration(seconds: 2), (timer) async {
+    _logPollingTimer = Timer.periodic(const Duration(seconds: 2), (
+      timer,
+    ) async {
       if (_status != VPNConnectionStatus.connected) {
         timer.cancel();
         return;

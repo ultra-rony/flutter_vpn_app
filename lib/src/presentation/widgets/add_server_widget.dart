@@ -109,7 +109,10 @@ class _AddServerSheetState extends State<AddServerSheet> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.blueAccent, width: 1),
+                borderSide: const BorderSide(
+                  color: Colors.blueAccent,
+                  width: 1,
+                ),
               ),
             ),
           ),
