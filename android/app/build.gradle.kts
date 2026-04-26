@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "ru.rodrix.vpnapp"
-    compileSdk = 34
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -22,7 +22,7 @@ android {
     defaultConfig {
         applicationId = "ru.rodrix.vpnapp"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true
@@ -49,7 +49,7 @@ android {
 
             ndk {
                 abiFilters.addAll(setOf("x86_64", "armeabi-v7a", "arm64-v8a"))
-                debugSymbolLevel = "FULL"
+                debugSymbolLevel = "SYMBOL_TABLE"
             }
         }
     }
