@@ -25,6 +25,9 @@ VPN-приложения на Flutter only(android).
 1. **Клонируйте репозиторий:**
 ```bash
 git clone git@github.com:ultra-rony/vpnapp.git
+```
+
+```bash
 cd vpnapp
 ```
 
