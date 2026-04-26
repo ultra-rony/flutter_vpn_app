@@ -91,7 +91,7 @@ class HomeCubit extends HydratedCubit<HomeState> {
 
   Future<void> _fetchIpInfo() async {
     try {
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
       final resp = await _getRemoteIpinfoUseCase();
       emit(state.copyWith(ipInfo: resp.data));
     } catch (e) {

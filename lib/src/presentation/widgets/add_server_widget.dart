@@ -76,11 +76,11 @@ class _AddServerSheetState extends State<AddServerSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
+          const Row(
             children: [
-              const Icon(Icons.add_link, color: Colors.blueAccent),
-              const SizedBox(width: 12),
-              const Text(
+              Icon(Icons.add_link, color: Colors.blueAccent),
+              SizedBox(width: 12),
+              Text(
                 'Добавить конфигурацию',
                 style: TextStyle(
                   color: Colors.white,

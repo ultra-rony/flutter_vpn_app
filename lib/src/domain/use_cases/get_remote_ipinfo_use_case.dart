@@ -5,8 +5,7 @@ import 'package:vpnapp/src/domain/entities/ipinfo_entity.dart';
 import 'package:vpnapp/src/domain/repositories/home_repository.dart';
 
 @injectable
-class GetRemoteIpinfoUseCase
-    implements UseCase<Result<IpinfoEntity?>, void> {
+class GetRemoteIpinfoUseCase implements UseCase<Result<IpinfoEntity?>, void> {
   final HomeRepository _repository;
 
   GetRemoteIpinfoUseCase(this._repository);

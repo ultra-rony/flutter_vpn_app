@@ -24,5 +24,5 @@ Future<void> main() async {
         : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
 
-  runApp(App());
+  runApp(const App());
 }

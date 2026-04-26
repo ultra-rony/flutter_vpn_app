@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {
                           if (state.selectedServer != null && !isConnecting) {
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                           height: 300,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       if (state.ipInfo != null && !isConnecting) ...[
                         SizedBox(
                           height: 120,
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ] else
-                        SizedBox(height: 120),
+                        const SizedBox(height: 120),
                       ServerSelectionWidget(
                         selectedServer: state.selectedServer,
                         onTap: () {

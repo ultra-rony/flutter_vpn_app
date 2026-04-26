@@ -56,7 +56,10 @@ class ServerListItem extends StatelessWidget {
                       censorAddress
                           ? '${server.protocol.toUpperCase()} • ${_censorString(server.address)}'
                           : '${server.protocol.toUpperCase()} • ${server.address}',
-                      style: TextStyle(fontSize: 12, fontFamily: 'monospace'),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontFamily: 'monospace',
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

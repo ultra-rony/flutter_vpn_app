@@ -31,7 +31,7 @@ class ConnectionToggle extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(width: double.infinity, height: 1),
+          const SizedBox(width: double.infinity, height: 1),
           const SizedBox(height: 20),
           SizedBox(
             width: double.infinity,
@@ -67,7 +67,7 @@ class ConnectionToggle extends StatelessWidget {
           ),
           if (!hasSelectedServer && !isConnected) ...[
             const SizedBox(height: 12),
-            Text(
+            const Text(
               'ВЫБЕРИТЕ ПУНКТ НАЗНАЧЕНИЯ ДЛЯ НАЧАЛА',
               style: TextStyle(
                 fontSize: 10,
