@@ -23,7 +23,7 @@ class HomeRoute extends _i2.PageRouteInfo<void> {
   static _i2.PageInfo page = _i2.PageInfo(
     name,
     builder: (data) {
-      return const _i1.HomePage();
+      return _i2.WrappedRoute(child: const _i1.HomePage());
     },
   );
 }

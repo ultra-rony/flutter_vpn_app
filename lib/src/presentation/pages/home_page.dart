@@ -1,24 +1,31 @@
 import 'dart:async';
 
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vpnapp/core/di/injectable.dart';
 import 'package:vpnapp/core/models/v2ray_server.dart';
 import 'package:vpnapp/core/utils/v2ray_service.dart';
+import 'package:vpnapp/src/presentation/cubit/home_cubit.dart';
 import 'package:vpnapp/src/presentation/widgets/connection_toggle.dart';
 import 'package:vpnapp/src/presentation/widgets/server_list_item.dart';
 
 @RoutePage()
-class HomePage extends StatefulWidget {
+class HomePage extends StatefulWidget implements AutoRouteWrapper {
   const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(create: (_) => getIt<HomeCubit>(), child: this);
+  }
 }
 
 class _HomePageState extends State<HomePage> {
   final V2RayService _v2rayService = V2RayService();
 
-  // Ваш статический список ссылок
   final List<String> _rawServerLinks = [
     "vless://bd700024-ad36-4dec-9289-eb5813a157d9@45.88.15.168:8443?encryption=none&security=tls&type=ws&headerType=none&path=%2Fvless&sni=admin.vipvpnn.ru#VIPVPN%20-%20Netherlands%20%F0%9F%87%B3%F0%9F%87%B1",
     "vless://bd700024-ad36-4dec-9289-eb5813a157d9@45.88.15.168:8443?encryption=none&security=tls&type=ws&headerType=none&path=%2Fvless&sni=admin.vipvpnn.ru#VIPVPN%20-%20Netherlands%20%F0%9F%87%B3%F0%9F%87%B1"
@@ -46,7 +53,6 @@ class _HomePageState extends State<HomePage> {
     _loadStaticServers();
   }
 
-  // Метод для парсинга вашего списка строк в объекты V2RayServer
   void _loadStaticServers() {
     setState(() {
       _servers = _rawServerLinks.map((link) => V2RayServer.fromAnyLink(link)).toList();
@@ -119,7 +125,7 @@ class _HomePageState extends State<HomePage> {
           server: server,
           isSelected: isSelected,
           onTap: () => _selectServer(server.id),
-          censorAddress: false, // Отключаем цензуру для наглядности
+          censorAddress: false,
         );
       },
     );
