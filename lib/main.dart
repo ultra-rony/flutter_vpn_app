@@ -1,28 +1,15 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vpnapp/app/app.dart';
 
-void main() {
-  runApp(const V2RayScreen());
-}
+import 'package:vpnapp/core/bloc/app_bloc_observer.dart';
 
-class V2RayScreen extends StatefulWidget {
-  const V2RayScreen({super.key});
-  @override
-  State<V2RayScreen> createState() => _V2RayScreenState();
-}
+import 'core/di/injectable.dart';
 
-class _V2RayScreenState extends State<V2RayScreen> {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureInjection();
+  Bloc.observer = getIt<AppBlocObserver>();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text("V2Ray Strict Mode")),
-        body: Center(
-          child: Text("data"),
-        ),
-      ),
-    );
-  }
+  runApp(App());
 }

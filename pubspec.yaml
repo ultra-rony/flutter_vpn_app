@@ -1,8 +1,15 @@
 name: vpnapp
-description: "Flutter VPN app only android"
+description: "Flutter VPN app only (android)"
 publish_to: 'none'
 
 version: 1.0.0+1
+
+repository: https://github.com/ultra-rony/vpnapp
+homepage: https://github.com/ultra-rony/vpnapp
+
+owner:
+  name: Romain Diakonov
+  email: i@rodrix.ru
 
 environment:
   sdk: ^3.11.0
@@ -12,6 +19,17 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
+  get_it: ^9.0.5
+  flutter_bloc: ^9.1.1
+  logger: ^2.6.2
+  freezed_annotation: ^3.1.0
+  intl: ^0.20.2
+  json_annotation: ^4.9.0
+  injectable: ^2.6.0
+  auto_route: ^10.2.0
+  google_fonts: ^6.3.2
+  hydrated_bloc: ^11.0.0
+  path_provider: ^2.1.5
   dio: ^5.9.2
   v2ray_dan:
     path: packages/v2ray_dan
@@ -20,6 +38,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  build_runner: ^2.10.1
+  injectable_generator: ^2.9.1
+  auto_route_generator: ^10.2.5
+  json_serializable: ^6.11.1
+  freezed: ^3.2.3
 
 flutter:
   uses-material-design: true
