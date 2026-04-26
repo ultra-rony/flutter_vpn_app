@@ -14,30 +14,64 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
-
+ List<V2RayServer> get servers; V2RayServer? get selectedServer; VPNConnectionStatus get connectionStatus; bool get isLoading;
+/// Create a copy of HomeState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>(this as HomeState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&const DeepCollectionEquality().equals(other.servers, servers)&&(identical(other.selectedServer, selectedServer) || other.selectedServer == selectedServer)&&(identical(other.connectionStatus, connectionStatus) || other.connectionStatus == connectionStatus)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(servers),selectedServer,connectionStatus,isLoading);
 
 @override
 String toString() {
-  return 'HomeState()';
+  return 'HomeState(servers: $servers, selectedServer: $selectedServer, connectionStatus: $connectionStatus, isLoading: $isLoading)';
 }
 
 
 }
 
 /// @nodoc
-class $HomeStateCopyWith<$Res>  {
-$HomeStateCopyWith(HomeState _, $Res Function(HomeState) __);
+abstract mixin class $HomeStateCopyWith<$Res>  {
+  factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
+@useResult
+$Res call({
+ List<V2RayServer> servers, V2RayServer? selectedServer, VPNConnectionStatus connectionStatus, bool isLoading
+});
+
+
+
+
+}
+/// @nodoc
+class _$HomeStateCopyWithImpl<$Res>
+    implements $HomeStateCopyWith<$Res> {
+  _$HomeStateCopyWithImpl(this._self, this._then);
+
+  final HomeState _self;
+  final $Res Function(HomeState) _then;
+
+/// Create a copy of HomeState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? servers = null,Object? selectedServer = freezed,Object? connectionStatus = null,Object? isLoading = null,}) {
+  return _then(_self.copyWith(
+servers: null == servers ? _self.servers : servers // ignore: cast_nullable_to_non_nullable
+as List<V2RayServer>,selectedServer: freezed == selectedServer ? _self.selectedServer : selectedServer // ignore: cast_nullable_to_non_nullable
+as V2RayServer?,connectionStatus: null == connectionStatus ? _self.connectionStatus : connectionStatus // ignore: cast_nullable_to_non_nullable
+as VPNConnectionStatus,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
 }
 
 
@@ -55,12 +89,11 @@ extension HomeStatePatterns on HomeState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Data value)?  data,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _HomeState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Data() when data != null:
-return data(_that);case _:
+case _HomeState() when $default != null:
+return $default(_that);case _:
   return orElse();
 
 }
@@ -78,12 +111,11 @@ return data(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Data value)  data,}){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _HomeState value)  $default,){
 final _that = this;
 switch (_that) {
-case _Initial():
-return initial(_that);case _Data():
-return data(_that);case _:
+case _HomeState():
+return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +132,11 @@ return data(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Data value)?  data,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _HomeState value)?  $default,){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Data() when data != null:
-return data(_that);case _:
+case _HomeState() when $default != null:
+return $default(_that);case _:
   return null;
 
 }
@@ -122,11 +153,10 @@ return data(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( List<String>? servers,  int? selectedServerIndex,  bool isConnecting)?  data,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<V2RayServer> servers,  V2RayServer? selectedServer,  VPNConnectionStatus connectionStatus,  bool isLoading)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Data() when data != null:
-return data(_that.servers,_that.selectedServerIndex,_that.isConnecting);case _:
+case _HomeState() when $default != null:
+return $default(_that.servers,_that.selectedServer,_that.connectionStatus,_that.isLoading);case _:
   return orElse();
 
 }
@@ -144,11 +174,10 @@ return data(_that.servers,_that.selectedServerIndex,_that.isConnecting);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( List<String>? servers,  int? selectedServerIndex,  bool isConnecting)  data,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<V2RayServer> servers,  V2RayServer? selectedServer,  VPNConnectionStatus connectionStatus,  bool isLoading)  $default,) {final _that = this;
 switch (_that) {
-case _Initial():
-return initial();case _Data():
-return data(_that.servers,_that.selectedServerIndex,_that.isConnecting);case _:
+case _HomeState():
+return $default(_that.servers,_that.selectedServer,_that.connectionStatus,_that.isLoading);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +194,10 @@ return data(_that.servers,_that.selectedServerIndex,_that.isConnecting);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( List<String>? servers,  int? selectedServerIndex,  bool isConnecting)?  data,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<V2RayServer> servers,  V2RayServer? selectedServer,  VPNConnectionStatus connectionStatus,  bool isLoading)?  $default,) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Data() when data != null:
-return data(_that.servers,_that.selectedServerIndex,_that.isConnecting);case _:
+case _HomeState() when $default != null:
+return $default(_that.servers,_that.selectedServer,_that.connectionStatus,_that.isLoading);case _:
   return null;
 
 }
@@ -180,85 +208,52 @@ return data(_that.servers,_that.selectedServerIndex,_that.isConnecting);case _:
 /// @nodoc
 
 
-class _Initial implements HomeState {
-  const _Initial();
+class _HomeState implements HomeState {
+  const _HomeState({final  List<V2RayServer> servers = const [], this.selectedServer, this.connectionStatus = VPNConnectionStatus.disconnected, this.isLoading = false}): _servers = servers;
   
 
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'HomeState.initial()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class _Data implements HomeState {
-  const _Data({final  List<String>? servers, this.selectedServerIndex, required this.isConnecting}): _servers = servers;
-  
-
- final  List<String>? _servers;
- List<String>? get servers {
-  final value = _servers;
-  if (value == null) return null;
+ final  List<V2RayServer> _servers;
+@override@JsonKey() List<V2RayServer> get servers {
   if (_servers is EqualUnmodifiableListView) return _servers;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
+  return EqualUnmodifiableListView(_servers);
 }
 
- final  int? selectedServerIndex;
- final  bool isConnecting;
+@override final  V2RayServer? selectedServer;
+@override@JsonKey() final  VPNConnectionStatus connectionStatus;
+@override@JsonKey() final  bool isLoading;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
+@override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$DataCopyWith<_Data> get copyWith => __$DataCopyWithImpl<_Data>(this, _$identity);
+_$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Data&&const DeepCollectionEquality().equals(other._servers, _servers)&&(identical(other.selectedServerIndex, selectedServerIndex) || other.selectedServerIndex == selectedServerIndex)&&(identical(other.isConnecting, isConnecting) || other.isConnecting == isConnecting));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&const DeepCollectionEquality().equals(other._servers, _servers)&&(identical(other.selectedServer, selectedServer) || other.selectedServer == selectedServer)&&(identical(other.connectionStatus, connectionStatus) || other.connectionStatus == connectionStatus)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_servers),selectedServerIndex,isConnecting);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_servers),selectedServer,connectionStatus,isLoading);
 
 @override
 String toString() {
-  return 'HomeState.data(servers: $servers, selectedServerIndex: $selectedServerIndex, isConnecting: $isConnecting)';
+  return 'HomeState(servers: $servers, selectedServer: $selectedServer, connectionStatus: $connectionStatus, isLoading: $isLoading)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$DataCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
-  factory _$DataCopyWith(_Data value, $Res Function(_Data) _then) = __$DataCopyWithImpl;
-@useResult
+abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
+  factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
+@override @useResult
 $Res call({
- List<String>? servers, int? selectedServerIndex, bool isConnecting
+ List<V2RayServer> servers, V2RayServer? selectedServer, VPNConnectionStatus connectionStatus, bool isLoading
 });
 
 
@@ -266,20 +261,21 @@ $Res call({
 
 }
 /// @nodoc
-class __$DataCopyWithImpl<$Res>
-    implements _$DataCopyWith<$Res> {
-  __$DataCopyWithImpl(this._self, this._then);
+class __$HomeStateCopyWithImpl<$Res>
+    implements _$HomeStateCopyWith<$Res> {
+  __$HomeStateCopyWithImpl(this._self, this._then);
 
-  final _Data _self;
-  final $Res Function(_Data) _then;
+  final _HomeState _self;
+  final $Res Function(_HomeState) _then;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? servers = freezed,Object? selectedServerIndex = freezed,Object? isConnecting = null,}) {
-  return _then(_Data(
-servers: freezed == servers ? _self._servers : servers // ignore: cast_nullable_to_non_nullable
-as List<String>?,selectedServerIndex: freezed == selectedServerIndex ? _self.selectedServerIndex : selectedServerIndex // ignore: cast_nullable_to_non_nullable
-as int?,isConnecting: null == isConnecting ? _self.isConnecting : isConnecting // ignore: cast_nullable_to_non_nullable
+@override @pragma('vm:prefer-inline') $Res call({Object? servers = null,Object? selectedServer = freezed,Object? connectionStatus = null,Object? isLoading = null,}) {
+  return _then(_HomeState(
+servers: null == servers ? _self._servers : servers // ignore: cast_nullable_to_non_nullable
+as List<V2RayServer>,selectedServer: freezed == selectedServer ? _self.selectedServer : selectedServer // ignore: cast_nullable_to_non_nullable
+as V2RayServer?,connectionStatus: null == connectionStatus ? _self.connectionStatus : connectionStatus // ignore: cast_nullable_to_non_nullable
+as VPNConnectionStatus,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

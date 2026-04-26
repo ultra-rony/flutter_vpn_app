@@ -23,9 +23,6 @@ class ConnectionToggle extends StatelessWidget {
         status == VPNConnectionStatus.connecting ||
         status == VPNConnectionStatus.disconnecting;
 
-    // Disabled only if:
-    // 1. No server selected AND not connected
-    // 2. Currently processing (loading)
     final isEnabled = (hasSelectedServer || isConnected) && !isProcessing;
 
     return Container(
@@ -34,18 +31,14 @@ class ConnectionToggle extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Minimal Divider
           SizedBox(width: double.infinity, height: 1),
           const SizedBox(height: 20),
-
-          // Toggle button
           SizedBox(
             width: double.infinity,
             height: 64,
             child: ElevatedButton(
               onPressed: isEnabled ? onToggle : null,
               style: ElevatedButton.styleFrom(
-                // foregroundColor: Colors.black,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -62,8 +55,8 @@ class ConnectionToggle extends StatelessWidget {
                     )
                   : Text(
                       isConnected
-                          ? 'DISCONNECT'
-                          : (isConnecting ? 'CONNECTING...' : 'CONNECT'),
+                          ? 'Отключить'
+                          : (isConnecting ? 'Подлючение...' : 'Подлючено'),
                       style: const TextStyle(
                         fontSize: 14,
                         letterSpacing: 1.5,
@@ -75,7 +68,7 @@ class ConnectionToggle extends StatelessWidget {
           if (!hasSelectedServer && !isConnected) ...[
             const SizedBox(height: 12),
             Text(
-              'SELECT A DESTINATION TO START',
+              'ВЫБЕРИТЕ ПУНКТ НАЗНАЧЕНИЯ ДЛЯ НАЧАЛА',
               style: TextStyle(
                 fontSize: 10,
                 letterSpacing: 1,

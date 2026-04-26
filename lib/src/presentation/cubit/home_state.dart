@@ -1,12 +1,11 @@
 part of 'home_cubit.dart';
 
 @freezed
-class HomeState with _$HomeState {
-  const factory HomeState.initial() = _Initial;
-
-  const factory HomeState.data({
-    List<String>? servers,
-    int? selectedServerIndex,
-    required bool isConnecting,
-  }) = _Data;
+abstract class HomeState with _$HomeState {
+  const factory HomeState({
+    @Default([]) List<V2RayServer> servers,
+    V2RayServer? selectedServer,
+    @Default(VPNConnectionStatus.disconnected) VPNConnectionStatus connectionStatus,
+    @Default(false) bool isLoading,
+  }) = _HomeState;
 }
