@@ -1,8 +1,8 @@
-# vpnapp
+# VPN App
 
-Flutter VPN app only (android)
+Проект мобильного VPN-приложения на Flutter.
 
-## Screenshots
+## 📸 Скриншоты
 
 <p align="center">
   <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/1.jpg?raw=true" width="250" />
@@ -10,16 +10,33 @@ Flutter VPN app only (android)
   <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/3.jpg?raw=true" width="250" />
 </p>
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Начало работы
 
-A few resources to get you started if this is your first Flutter project:
+Следуйте этим инструкциям, чтобы развернуть проект на локальном компьютере.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+### Предварительные требования
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Убедитесь, что у вас установлен [Flutter SDK](https://docs.flutter.dev/get-started/install) версии **3.0.0** или выше.
+
+### Установка и запуск
+
+1. **Клонируйте репозиторий:**
+   ```bash
+   git clone git@github.com:ultra-rony/vpnapp.git
+   cd vpnapp
+   ```
+
+2.  **Установка зависимостей**
+   Загрузите все необходимые пакеты:
+    ```bash
+    flutter pub get
+    ```
+
+3.  **Запуск приложения**
+    Убедитесь, что эмулятор запущен или устройство подключено, затем выполните:
+    ```bash
+    flutter run
+    ```
+    
