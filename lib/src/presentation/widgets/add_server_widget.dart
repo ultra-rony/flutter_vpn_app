@@ -98,7 +98,7 @@ class _AddServerSheetState extends State<AddServerSheet> {
             maxLines: 3,
             minLines: 1,
             decoration: InputDecoration(
-              hintText: 'vless:// или vmess://',
+              hintText: 'vless:// или https://',
               hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.3)),
               filled: true,
               fillColor: Colors.white.withValues(alpha: 0.05),
