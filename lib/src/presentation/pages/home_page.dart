@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:vpnapp/app/route/app_routers.gr.dart';
@@ -54,6 +55,7 @@ class _HomePageState extends State<HomePage> {
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
+                          HapticFeedback.mediumImpact();
                           if (state.selectedServer != null && !isConnecting) {
                             context.read<HomeCubit>().toggleConnection();
                           } else if (state.selectedServer == null) {
@@ -64,12 +66,21 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
                         },
-                        child: SvgPicture.asset(
-                          !isConnected
-                              ? 'assets/btn_off.svg'
-                              : "assets/btn_on.svg",
+                        child: SizedBox(
                           width: 300,
                           height: 300,
+                          child: Center(
+                            child: isConnecting
+                                ? const CircularProgressIndicator(
+                                    strokeWidth: 4,
+                                    color: Colors.white,
+                                  )
+                                : SvgPicture.asset(
+                                    !isConnected
+                                        ? 'assets/btn_off.svg'
+                                        : "assets/btn_on.svg",
+                                  ),
+                          ),
                         ),
                       ),
                       const Spacer(),

@@ -23,6 +23,8 @@ import 'package:vpnapp/src/data/repositories/home_repository_impl.dart'
 import 'package:vpnapp/src/domain/repositories/home_repository.dart' as _i600;
 import 'package:vpnapp/src/domain/use_cases/get_remote_ipinfo_use_case.dart'
     as _i241;
+import 'package:vpnapp/src/domain/use_cases/get_remote_remnawave_vless_use_case.dart'
+    as _i733;
 import 'package:vpnapp/src/presentation/cubit/home_cubit.dart' as _i855;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -47,10 +49,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i241.GetRemoteIpinfoUseCase>(
       () => _i241.GetRemoteIpinfoUseCase(gh<_i600.HomeRepository>()),
     );
+    gh.factory<_i733.GetRemoteRemnawaveVlessUseCase>(
+      () => _i733.GetRemoteRemnawaveVlessUseCase(gh<_i600.HomeRepository>()),
+    );
     gh.lazySingleton<_i855.HomeCubit>(
       () => _i855.HomeCubit(
         gh<_i877.V2RayService>(),
         gh<_i241.GetRemoteIpinfoUseCase>(),
+        gh<_i733.GetRemoteRemnawaveVlessUseCase>(),
       ),
     );
     return this;

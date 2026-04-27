@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vpnapp/core/network/network_result.dart';
@@ -24,6 +26,27 @@ class HomeRepositoryImpl implements HomeRepository {
       return Failure('Status code: ${httpResponse.statusCode}');
     } on DioException catch (e) {
       return Failure('Error: $e');
+    }
+  }
+
+  @override
+  Future<Result<List<String>?>> getRemnawaveVless(String link) async {
+    try {
+      final response = await _homeRemoteDataSource.getRemnawaveVless(link);
+      if (response.statusCode == 200) {
+        final decoded = utf8.decode(base64.decode(response.data));
+        final list = decoded
+            .split('\n')
+            .where((e) => e.trim().isNotEmpty)
+            .where((e) => e.startsWith('vless://'))
+            .toList();
+        return Success(list);
+      }
+      return Failure('Status code: ${response.statusCode}');
+    } on DioException catch (e) {
+      return Failure('Dio error: ${e.message}');
+    } catch (e) {
+      return Failure('Decode error: $e');
     }
   }
 }
