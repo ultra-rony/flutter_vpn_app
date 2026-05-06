@@ -5,9 +5,9 @@ VPN-приложения на Flutter only(android).
 ## 📸 Скриншоты
 
 <p align="center">
-  <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/1.jpg?raw=true" width="200" />
-  <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/2.jpg?raw=true" width="200" />
-  <img src="https://github.com/ultra-rony/vpnapp/blob/main/screenshots/3.jpg?raw=true" width="200" />
+  <img src="https://github.com/ultra-rony/flutter_vpn_app/blob/main/screenshots/1.jpg?raw=true" width="200" />
+  <img src="https://github.com/ultra-rony/flutter_vpn_app/blob/main/screenshots/2.jpg?raw=true" width="200" />
+  <img src="https://github.com/ultra-rony/flutter_vpn_app/blob/main/screenshots/3.jpg?raw=true" width="200" />
 </p>
 
 ---
@@ -24,11 +24,11 @@ VPN-приложения на Flutter only(android).
 
 1. **Клонируйте репозиторий:**
 ```bash
-git clone git@github.com:ultra-rony/vpnapp.git
+git clone git@github.com:ultra-rony/flutter_vpn_app.git
 ```
 
 ```bash
-cd vpnapp
+cd flutter_vpn_app
 ```
 
 2.  **Установка зависимостей**
