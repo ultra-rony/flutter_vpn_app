@@ -1,4 +1,4 @@
-# VPN App
+# flutter_vpn_app
 
 VPN-приложения на Flutter only(android).
 
